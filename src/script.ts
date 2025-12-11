@@ -1,3 +1,5 @@
+import { NumberList } from "NumberList";
+
 /* Reduces each list to only one item. These items become the values of this map instead. The items are unique as values.    
  * In other words, an item is used as a value only once even if some lists share that same item. Therefore, null may be used as a value if necessary   
  * in order to maintain the uniqueness of the values.
@@ -138,21 +140,21 @@ class List extends Array {
   /*
    *
    */
-   insert(indexes, item) {
+  insert(indexes, item) {
     indexes.reverse();
 
     for (const index of indexes) {
       this.splice(index, 0, item);
     }
-   }
+  }
 
 
   /*
    *
    */
-   intersection(list) {
+  intersection(list) {
     return this.filter(a => list.find(b => a === b));
-   }
+  }
 
 
   /*
@@ -162,15 +164,15 @@ class List extends Array {
     const max = Math.floor(Math.random() * this.length) + 1;
     return this[max - 1];
   }
-  
-  
+
+
   /*
    *
    */
   remove(item) {
     let index = this.indexOf(item);
-    
-    while(index > -1) {
+
+    while (index > -1) {
       this.splice(index, 1);
       index = this.indexOf(item);
     }
@@ -218,7 +220,7 @@ class List extends Array {
     const index1 = this.indexOf(item1);
     const index2 = this.indexOf(item2);
 
-    if (index1 !== -1 && index2 !== -1) {      
+    if (index1 !== -1 && index2 !== -1) {
       this[index1] = item2;
       this[index2] = item1;
     }
@@ -226,151 +228,6 @@ class List extends Array {
     return this;
   }
 }
-
-
-/*
- *
- */
-class NumberList extends Array {
-  constructor(...numbers) {
-    super();
-    this.push(...numbers);
-  }
-
-
-  /* Returns true 
-   * @example
-   * // Returns true
-   * new NumberList(5, 4, 3, 2, 1).isDecreasing();
-   * // Returns false
-   * new NumberList(1, 2, 3, 4, 5).isDecreasing();
-   * @return {Boolean}
-   */
-  isDecreasing() {
-    return this.slice().reverse().isIncreasing();
-  }
-
-
-  /* Returns true
-   * @example
-   * // Returns true
-   * new NumberList(1, 1, 1, 1, 1).isOrdered();
-   * new NumberList(1, 2, 3, 4, 5).isOrdered();
-   * new NumberList(5, 4, 3, 2, 1).isOrdered();
-   * // Returns false
-   * new NumberList(1, 2, 3, 4, 1).isOrdered();
-   * @return {Boolean}
-   */  
-  isOrdered() {
-     return this.isDecreasing() || this.isFlat() || this.isIncreasing();
-  }
-
-
-  /* Returns a list of progressions in this NumberList. A progression is
-   * is a sequence of numbers that express an increment or decrement.
-   * @example
-   * new NumberList(1, 1, 1, 1, 1).getProgressions();
-   * // Returns [[1, 1, 1, 1, 1]]
-   * new NumberList(1, 2, 3, 4, 5).getProgressions();
-   * // Returns [[1, 2, 3, 4, 5]]
-   * new NumberList(5, 4, 3, 2, 1).getProgressions();
-   * // Returns [[5, 4, 3, 2, 1]]
-   * new NumberList(1, 2, 3, 4, 1).getProgressions();
-   * // Returns [[1, 2, 3, 4], [1]]
-   * @return {NumberList[]}
-   */  
-  getProgressions() {
-    let list = new NumberList();
-    const lists = [list];
-    let start = 0;
-    
-    this.forEach((n, index) => {
-      const sublist = this.slice(start, index + 1); 
-
-      if (sublist.isOrdered()) {
-        list.push(n);
-      }
-      else {
-        list = new NumberList(n);
-        lists.push(list);
-        start = index;
-      }
-    });
-
-    return lists;
-  }
-
-
-  /* Returns true 
-   * @example
-   * new NumberList(1, 1, 1, 1, 1).isFlat();
-   * // Returns true
-   * new NumberList(1, 2, 3, 4, 5).isFlat();
-   * // Returns false
-   * @return {Boolean}
-   */
-  isFlat() {
-    return Math.min(...this) === Math.max(...this);
-  }
-
-
-  /* Returns true 
-   * @example
-   * new NumberList(1, 2, 3, 4, 5).isIncreasing();
-   * // Returns true
-   * new NumberList(5, 4, 3, 2, 1).isIncreasing();
-   * // Returns false
-   * @return {Boolean}
-   */
-  isIncreasing() {
-    const condition = this.every((n, index) => {
-      const next = this[index + 1];
-      return next === undefined ? true : n <= next;
-    });
-
-    return this.isFlat() === false && condition;
-  }
-
-
-  /* Returns true 
-   * @example
-   * // Returns true
-   * new NumberList(1, 2, 3, 4, 5).isIncreasing();
-   * // Returns false
-   * new NumberList(5, 4, 3, 2, 1).isIncreasing();
-   * @return {Boolean}
-   */
-  hasStartedDescending() {
-    return this.slice(0, -1).isAscending() && this.at(-2) < this.at(-1);
-  }
-
-
-  /* Returns true 
-   * @example
-   * // Returns true
-   * new NumberList(1, 2, 3, 4, 5).isIncreasing();
-   * // Returns false
-   * new NumberList(5, 4, 3, 2, 1).isIncreasing();
-   * @return {Boolean}
-   */
-  isAscending() {
-    return this.isFlat() || this.isDecreasing();
-  }
-
-
-  /* Returns true 
-   * @example
-   * // Returns true
-   * new NumberList(1, 2, 3, 4, 5).isIncreasing();
-   * // Returns false
-   * new NumberList(5, 4, 3, 2, 1).isIncreasing();
-   * @return {Boolean}
-   */
-  isDescending() {
-    return this.isAscending() === false;
-  }
-}
-
 
 /*
  *
@@ -434,11 +291,11 @@ class ChartHistory extends NumberList {
   isValid() {
     let validity = false;
 
-    const progressions = this.getProgressions();
-    const {length} = progressions;
+    const progressions = this.getSegments();
+    const { length } = progressions;
 
     if (length === 2) {
-      if (progressions[0].isAscending() && (progressions[1].isIncreasing() || progressions[1].isFlat())) {
+      if (progressions[0].isDescending() && (progressions[1].isIncreasing() || progressions[1].isFlat())) {
         validity = true;
       }
     }
@@ -474,9 +331,9 @@ function createPlaylist(chart, intro, sting, advertisement, extra) {
   chart.insert([0], intro);
   chart.insert([1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22], sting);
   chart.insert([7, 28], extra);
-  chart.insert([5, 9, 13, 17, 21, 23, 27, 31, 35, 39, 43, ], advertisement);
+  chart.insert([5, 9, 13, 17, 21, 23, 27, 31, 35, 39, 43,], advertisement);
   chart.push(intro);
-  
+
   return chart;
 }
 
@@ -494,7 +351,7 @@ function insertExtraItems(chart, uncharted) {
     chart.splice(slot, 0, extraItem);
   }
 
- return chart;
+  return chart;
 }
 
 
@@ -503,7 +360,7 @@ function insertExtraItems(chart, uncharted) {
  */
 function parse(table) {
   const artists = Array.from(table.querySelectorAll('td:nth-of-type(5)')).map(artist => artist.textContent);
-  const titles =  Array.from(table.querySelectorAll('td:nth-of-type(4)')).map(title => title.textContent);
+  const titles = Array.from(table.querySelectorAll('td:nth-of-type(4)')).map(title => title.textContent);
   const list = new List();
 
   for (const artist of artists) {
@@ -525,50 +382,50 @@ function validate(playlist) {
 
   const order = [
     'INTRO',
-    'STING','20',
-    'STING','19',
+    'STING', '20',
+    'STING', '19',
     'ADVERTISEMENT',
 
-    'STING','18',
-    'STING NEW VIDEO','xtra',
+    'STING', '18',
+    'STING NEW VIDEO', 'xtra',
     'ADVERTISEMENT',
 
-    'STING','17',
-    'STING','16',
+    'STING', '17',
+    'STING', '16',
     'ADVERTISEMENT',
 
-    'STING','15',
-    'STING','14',
+    'STING', '15',
+    'STING', '14',
     'ADVERTISEMENT',
 
-    'STING','13',
-    'STING','12',
+    'STING', '13',
+    'STING', '12',
     'ADVERTISEMENT',
 
-    'STING','11',
+    'STING', '11',
     'ADVERTISEMENT',
 
-    'STING','10',
-    'STING','09',
+    'STING', '10',
+    'STING', '09',
     'ADVERTISEMENT',
 
-    'STING','08',
-    'STING NEW VIDEO','xtra',
+    'STING', '08',
+    'STING NEW VIDEO', 'xtra',
     'ADVERTISEMENT',
 
-    'STING','07',
-    'STING','06',
+    'STING', '07',
+    'STING', '06',
     'ADVERTISEMENT',
 
-    'STING','05',
-    'STING','04',
+    'STING', '05',
+    'STING', '04',
     'ADVERTISEMENT',
 
-    'STING','03',
-    'STING','02',
+    'STING', '03',
+    'STING', '02',
     'ADVERTISEMENT',
 
-    'STING','01',
+    'STING', '01',
     'INTRO',
   ];
 
@@ -612,7 +469,7 @@ class Chart extends List {
    */
   format(database) {
     // TO DO: LIST ALL THE UNWANTED CHART MOVEMENTS
-    
+
     // FILTER 0:  ANY NEW ENTRIES
     // FILTER 1:  ANY ENTRIES MOVING BACKWARDS AND THEN MOVING FORWARDS AGAIN.
     // FILTER 2:  ANY ENTRIES EXITING WITHOUT A BACKWARDS MOVEMENT AND A DEBUT OCCURS AT A HIGHER POSITION
@@ -627,11 +484,11 @@ class Chart extends List {
     // FILTER 4:  ANY ENTRIES EXITING FROM POSITION 12 OR LOWER
     // FILTER 5:  FEATURE AT RISK: ANY ENTRIES STARTING TO MOVE UNEXPECTEDLY BACKWARDS AFTER THEY'VE BEEN MOVING FORWARDS FOR LESS THAN N WHAT IS THIS NUMBER? NUMBER OF WEEKS
     // FILTER 7:  ANY ENTRIES IN THE SAME POSITION FOR 3 WEEKS (EXCEPT POSITION 1)  
-    
-    
-    
-    
-    
+
+
+
+
+
     // Detect continuity errors.
     const errors = Chart.detector3(database);
     errors.shuffle();
@@ -641,7 +498,7 @@ class Chart extends List {
     // Find entries in this chart able to eliminate continuity errors. 
     errors.forEach(error => {
       const targets = Chart.corrector3(error, this, database);
-//       Chart.sorter3(error, target, [chart1, chart2, this, listB]);
+      //       Chart.sorter3(error, target, [chart1, chart2, this, listB]);
       map.set(error, targets);
     });
 
@@ -653,8 +510,8 @@ class Chart extends List {
         this.swap(replacee, replacement);
       }
     }
-    
-    
+
+
     // TO DO: UPDATE DATABASE
     // THEN CONTINUE WITH THE NEXT ERROR
 
@@ -676,7 +533,7 @@ class Chart extends List {
     return index >= 0 ? index + 1 : 21;
   }
 
-  
+
   /* Compares `chartA` to `chartB` to find new entries on `chartA`. 
    * @param {Chart} chartA
    * @param {Chart} chartB
@@ -689,38 +546,38 @@ class Chart extends List {
 
 
   static corrector0(entryA, chartA, database) {
-//     const position = chartA.positionOf(entryA);
-//     const entries = chartA.filter(entry => {
+    //     const position = chartA.positionOf(entryA);
+    //     const entries = chartA.filter(entry => {
 
-//       if (entry === entryA) {
-//         return false;
-//       }
+    //       if (entry === entryA) {
+    //         return false;
+    //       }
 
-//       if (chartA.positionOf(entry) < position) {
-//         return false;
-//       }
+    //       if (chartA.positionOf(entry) < position) {
+    //         return false;
+    //       }
 
-//       const history = database.get(entry);
+    //       const history = database.get(entry);
 
-//       if (history.hasStartedDescending() === false) {
-//         return false;
-//       }
- 
-//       return true;
-//     });
-    
-//     const pairs = entries.map(entry => {
-//       return [entry, ''];
-//     });
-    
-//     const entries = sorter(entries);
-    
-//     chartA.replace(1, '');
-//     chartA.replace(1, '');
-//     database.update();
+    //       if (history.hasStartedDescending() === false) {
+    //         return false;
+    //       }
+
+    //       return true;
+    //     });
+
+    //     const pairs = entries.map(entry => {
+    //       return [entry, ''];
+    //     });
+
+    //     const entries = sorter(entries);
+
+    //     chartA.replace(1, '');
+    //     chartA.replace(1, '');
+    //     database.update();
   }
-  
-  
+
+
   /* Compares `chartA` to `chartB` to find entries on `chartB` which have been ascending
    * and have unexpectedly departed from chartA.
    *                               A   B
@@ -733,7 +590,7 @@ class Chart extends List {
   static detector1(chartA, chartB, database) {
     return chartB.difference(chartA).filter(entry => {
       const history = new ChartHistory(...(database.get(entry)?.history || []), chartA.positionOf(entry));
-      return history.isAscending();
+      return history.isDescending();
     });
   }
 
@@ -827,7 +684,7 @@ class Chart extends List {
           if (history.at(-3) === 21 && history.at(-1) > position) {
             return false;
           }
-          
+
           if (history.at(-2) === 21) {
             return false;
           }
@@ -839,7 +696,7 @@ class Chart extends List {
       const entries = foo(entry, database);
 
       // Find out if there are candidates();
-//    if (foo(entry, database)) {}
+      //    if (foo(entry, database)) {}
 
       return true;
     });
@@ -854,7 +711,7 @@ class Chart extends List {
   static detector3(database) {
     const errors = new List();
 
-    for (const [entry, history] of database) {      
+    for (const [entry, history] of database) {
       // Filter in if `entry` is in the same position for 3 consecutive charts and not for 4 consecutive charts.
       //  1   2   A   B       1   2   A   B
       // [02, 02, 02, 03]    [02, 02, 02, 02]
@@ -877,7 +734,7 @@ class Chart extends List {
   static corrector3(entry, chartA, database) {
     const history = database.get(entry);
     const [A, B] = history.slice(-2);
- 
+
     let [start, end] = [A, B].sort((a, b) => a - b);
 
     if (history.hasStartedDescending()) {
@@ -932,11 +789,11 @@ class Chart extends List {
         return false;
       }
 
-//  NOTE: Filter out if entry position is less than 9 and `after` causes entry to descend in less than 5 weeks.
-//       if (before.slice(0, -1).isAscending() && after.slice(0, -1).hasStartedDescending() && before.at(-2) <= 9 && 
-//         before.length <= 6) {
-//         return false;
-//       }
+      //  NOTE: Filter out if entry position is less than 9 and `after` causes entry to descend in less than 5 weeks.
+      //       if (before.slice(0, -1).isAscending() && after.slice(0, -1).hasStartedDescending() && before.at(-2) <= 9 && 
+      //         before.length <= 6) {
+      //         return false;
+      //       }
 
       // Filter out if the difference between `entry`'s position in `chart2` and `positionA` is at least 2 
       // and `entry` starts to descend from `chartB`.
@@ -944,7 +801,7 @@ class Chart extends List {
       // Example: [6, 5, 1, 8]            19 16 10 19, 19 16 13 19 | 21 18 16 20, 21 18 15 20 | 05 05 04 09, 05 05 06 09 
       if (after.hasStartedDescending() &&
         (after.at(-4) - after.at(-3) <= 2 && chartA.positionOf(entry) - A >= 2 ||
-         after.at(-4) - after.at(-3) >= 3 && chartA.positionOf(entry) - A >= 1)) {
+          after.at(-4) - after.at(-3) >= 3 && chartA.positionOf(entry) - A >= 1)) {
         return false;
       }
 
@@ -978,7 +835,7 @@ class Chart extends List {
         map.set(value, 11);
       }
       // [15, 12, 12, 18]  [15, 12, 13, 18]
-      else if (new ChartHistory(...history.slice(-4, -1), position).hasStartedDescending() === true) {
+      else if (new ChartHistory(...history.slice(-4, -1), position).hasBegunDescending() === true) {
         map.set(value, 1);
       }
       // [**, **, 17, 14]  [**, **, 16, 14]
@@ -1019,4 +876,9 @@ class Chart extends List {
 
     return values;
   }
+}
+
+export {
+  createChartFromList,
+  List,
 }

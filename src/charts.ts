@@ -1493,21 +1493,21 @@ const charts = [
 });
 // .Flat().Map(Chart => New Chart(...Chart));
 // // Ensure That There Are No Spelling Mistakes
-// // 
+// //
 // Const Database = New Database(...Charts);
 // Const Charterrors = [];
 // Class Charterror {
 // }
 // For ([Entry, Charthistory] Of Database) {
-//   Const Positions = Charthistory.Map(); 
+//   Const Positions = Charthistory.Map();
 // }
 // Be Ware Of Content Between () Such As Nine Girls - Absolutely (Story Of A Girl)
 // Get Names And Songs From Mtv Top 20 And 10 Mas Pedidos
 // Remove The Following Characters:
 // Any Characters That Aren't Numbers Or Letters
-// Check This Regular Expression To Extract Words From The Chart 
+// Check This Regular Expression To Extract Words From The Chart
 // /\B[\P{Letter}\P{Mark}0-9]+\B/Gu
-// Be Aware Of Words Such As A.F.I Where A, F And I Are Separated Out As Words. 
+// Be Aware Of Words Such As A.F.I Where A, F And I Are Separated Out As Words.
 // ["Lovee", [<, <, <, ]]
 // Const O = Await Fetch(Http://127.0.0.1:8001/Src/Test-Data.Ts);
 // Const P = (Await O.Text()).Touppercase();
@@ -1520,7 +1520,7 @@ const charts = [
 // Const A = P.Match(/\B[\P{Letter}\P{Mark}0-9-]+\B/Gu);
 // A.Sort();
 // Const Set = New Set(A);
-// Https://Open.Spotify.Com/Playlist/3xcuvy8pnl9f78gvwwigql 
+// Https://Open.Spotify.Com/Playlist/3xcuvy8pnl9f78gvwwigql
 // Playlist Publique
 // Relive The Magic Of The 2010s With The Top 1000 Hits That Defined The Decade. From Chart-Toppers To Hidden
 // Https://Open.Spotify.Com/Playlist/3xcuvy8pnl9f78gvwwigql <<< 10s
@@ -6329,4 +6329,183 @@ const c = [
   `N.E.R.D featuring Nelly Furtado - "Hot-N-Fun"`,
   `Eminem featuring Rihanna - "Love the Way You Lie"`,
   `30 Seconds To Mars - "Closer to the Edge"`,
+];
+
+
+// How many songs per year
+// 1989: 66
+// 1990: 155
+// 1991: 145
+// 1992: 139
+// 1993: 147
+// 1994: 134
+// 1995: 128
+// 1996: 124
+// 1997: 130
+// 1998: 150
+// 1999: 132
+// 2000: 114
+// 2001: 107
+// 2002: 94
+// 2003: 83
+// 2004: 104
+// 2005: 108
+// 2006: 111
+// 2007: 137
+// 2008: 116
+// 2009: 140
+// 2010: 116
+// 2011: 152
+// 2012: 139
+// 2013: 99
+// 2014: 128
+// 2015: 178
+// 2016: 156
+// 2017: 141
+
+
+// KIND OF ERRORS
+// MULTIPLE INSTANCES OF ZIG-ZAGGING
+// ENTRY MULTIPLE TIMES (THIS COULD BE CONSIDERED A FORM OF ZIG-ZAGGING)
+// ONE INSTANCE OF ZIG-ZAGGING
+// DEBUTING HIGHER THAN THE 13TH POSITION
+// EXITING FROM THE 11TH POSITION
+// REPEATING POSITION MORE THAN 2 WEEKS (EXCEPT FOR NUMBER 1 POSITION) AND (NUMBER 2 POSITION FOR MORE THAN 4 WEEKS)
+// TOO MANY DEBUTS
+// START DESCENDING TOO SOON
+
+
+// MULTIPLE ENTRIES BY THE SAME ARTIST
+// SONGS NOT IN A LOGICAL CHRONOLOGICAL POSITION
+// EXITING WITHOUT HAVING A DESCEND WITHIN TOP 20
+// ILLOGICAL BULLET, FOR EXAMPLE, 20, 20, 19, 5,
+
+
+// KIND OF ERRORS
+// ZIG-ZAGGING SUCH AS 17, 19, 16, 14, 12, 19, 18, 15, 14,
+// WHAT DO WE DO?
+// BREAK THAT UP INTO VALID CHUNKS SUCH AS 17, 19 +++ 16, 14, 12, 19 ++++, 18
+// FIND OUT WHERE THE PEAK IS <<< IN THIS CASE 12
+// GET THE VALID CHUNK THAT HAS THE PEAK
+// MAKE THAT CHUNK AS LONG AS POSSIBLE, FOR EXAMPLE, 19, 16, 14, 12, 19,
+// THE REMAINING CHUNKS GET ANOTHER NAME <<< PROBABLY A RANDOMLY GENERATED NAME (IT'S ASSUMED THOSE CHUNKS WILL BE ADDED TO OTHER VALID CHUNKS)
+// 10 randomly generated zig-zag series (descending, then ascending, with zig-zags; 1-30 numbers; first/last between 1-20)
+
+const zigzagSeries = [
+    [19, 17, 14, 12, 10, 8, 11, 7, 5, 3, 2, 4, 9, 15, 20], // zig-zags at 8->11->7, 2->4->9
+    [16, 14, 12, 9, 7, 6, 8, 5, 3, 2, 4, 8, 13, 18], // zig-zags at 6->8->5, 2->4->8
+    [20, 18, 15, 13, 10, 8, 9, 7, 5, 6, 4, 8, 13, 19], // zig-zags at 8->9->7, 5->6->4, 4->8
+    [14, 12, 10, 8, 7, 9, 6, 4, 3, 5, 9, 13, 17], // zig-zags at 7->9->6, 3->5->9
+    [18, 16, 13, 11, 9, 8, 10, 7, 5, 4, 6, 9, 13, 17, 20], // zig-zags at 8->10->7, 4->6->9
+    [11, 9, 7, 5, 4, 6, 3, 2, 1, 3, 7, 12], // zig-zags at 4->6->3, 1->3->7
+    [17, 15, 12, 10, 8, 7, 9, 6, 4, 2, 3, 6, 10, 15], // zig-zags at 7->9->6, 2->3->6
+    [13, 11, 9, 8, 10, 7, 5, 6, 4, 2, 1, 2, 5, 9], // zig-zags at 8->10->7, 5->6->4, 1->2->5
+    [20, 18, 16, 13, 11, 9, 8, 10, 7, 5, 6, 9, 13, 17, 20], // zig-zags at 8->10->7, 5->6->9
+    [15, 13, 10, 8, 6, 7, 5, 3, 2, 4, 9, 15, 20], // zig-zags at 6->7->5, 2->4->9
+];
+
+
+
+const series = [
+    [20, 19, 16, 13, 11, 9, 6, 7, 7, 6, 9, 15],
+    [14, 7, 3, 2, 1, 1, 1, 3, 2, 3, 4, 4, 6, 6, 9, 18],
+    [17, 15, 12, 10, 8, 6, 5, 7, 10, 13, 16],
+    [12, 9, 7, 5, 4, 4, 6, 8, 11, 14],
+    [19, 18, 15, 13, 10, 8, 7, 8, 10, 13, 17, 20],
+    [8, 6, 4, 2, 1, 2, 4, 7, 11, 15],
+    [20, 18, 17, 15, 12, 10, 9, 10, 13, 17, 19],
+    [15, 13, 10, 8, 7, 8, 10, 13, 16, 18],
+    [11, 9, 7, 5, 3, 2, 2, 4, 7, 10, 13, 17],
+    [16, 14, 12, 9, 7, 5, 6, 8, 11, 15, 19],
+    [18, 16, 13, 11, 9, 8, 9, 12, 15, 18, 20],
+    [7, 5, 3, 2, 1, 2, 4, 7, 10, 14],
+    [13, 11, 9, 7, 6, 7, 9, 12, 16, 19],
+    [20, 19, 17, 14, 12, 10, 8, 9, 12, 15, 18],
+    [9, 7, 5, 3, 2, 2, 4, 7, 11, 16],
+    [17, 15, 13, 10, 8, 7, 8, 11, 15, 19],
+    [12, 10, 8, 6, 5, 6, 8, 11, 15, 18],
+    [19, 17, 15, 12, 10, 8, 7, 8, 11, 14, 18],
+    [8, 6, 4, 2, 1, 2, 5, 9, 13, 17],
+    [16, 14, 12, 9, 7, 6, 7, 10, 14, 18],
+    [11, 9, 7, 5, 3, 2, 2, 4, 8, 13, 18],
+    [18, 16, 13, 11, 9, 8, 9, 12, 16, 20],
+    [7, 5, 3, 2, 1, 2, 4, 8, 13, 19],
+    [13, 11, 9, 7, 6, 7, 10, 14, 19],
+    [20, 18, 16, 13, 11, 9, 8, 9, 12, 16, 19],
+    [9, 7, 5, 3, 2, 2, 4, 8, 13, 18],
+    [17, 15, 13, 10, 8, 7, 8, 12, 17, 20],
+    [12, 10, 8, 6, 5, 6, 9, 13, 18],
+    [19, 17, 15, 12, 10, 8, 7, 8, 12, 16, 20],
+    [8, 6, 4, 2, 1, 2, 5, 10, 16],
+    [16, 14, 12, 9, 7, 6, 7, 11, 16, 20],
+    [11, 9, 7, 5, 3, 2, 2, 4, 9, 15],
+    [18, 16, 13, 11, 9, 8, 9, 13, 18],
+    [7, 5, 3, 2, 1, 2, 4, 9, 15],
+    [13, 11, 9, 7, 6, 7, 11, 16, 20],
+    [20, 18, 16, 13, 11, 9, 8, 9, 13, 18],
+    [9, 7, 5, 3, 2, 2, 4, 9, 15],
+    [17, 15, 13, 10, 8, 7, 8, 13, 19],
+    [12, 10, 8, 6, 5, 6, 10, 15, 20],
+    [19, 17, 15, 12, 10, 8, 7, 8, 13, 19],
+    [8, 6, 4, 2, 1, 2, 6, 12, 18],
+    [16, 14, 12, 9, 7, 6, 7, 12, 18],
+    [11, 9, 7, 5, 3, 2, 2, 4, 10, 17],
+    [18, 16, 13, 11, 9, 8, 9, 14, 20],
+    [7, 5, 3, 2, 1, 2, 4, 10, 17],
+    [13, 11, 9, 7, 6, 7, 12, 18],
+    [20, 18, 16, 13, 11, 9, 8, 9, 14, 20],
+    [9, 7, 5, 3, 2, 2, 4, 10, 17],
+    [17, 15, 13, 10, 8, 7, 8, 14, 20],
+    [12, 10, 8, 6, 5, 6, 11, 17],
+    [19, 17, 15, 12, 10, 8, 7, 8, 14, 20],
+    [8, 6, 4, 2, 1, 2, 7, 13, 19],
+    [16, 14, 12, 9, 7, 6, 7, 13, 19],
+    [11, 9, 7, 5, 3, 2, 2, 4, 11, 18],
+    [18, 16, 13, 11, 9, 8, 9, 15, 20],
+    [7, 5, 3, 2, 1, 2, 4, 11, 18],
+    [13, 11, 9, 7, 6, 7, 13, 19],
+    [20, 18, 16, 13, 11, 9, 8, 9, 15, 20],
+    [9, 7, 5, 3, 2, 2, 4, 11, 18],
+    [17, 15, 13, 10, 8, 7, 8, 15, 20],
+    [12, 10, 8, 6, 5, 6, 12, 18],
+    [19, 17, 15, 12, 10, 8, 7, 8, 15, 20],
+    [8, 6, 4, 2, 1, 2, 8, 14, 20],
+    [16, 14, 12, 9, 7, 6, 7, 14, 20],
+    [11, 9, 7, 5, 3, 2, 2, 4, 12, 19],
+    [18, 16, 13, 11, 9, 8, 9, 16, 20],
+    [7, 5, 3, 2, 1, 2, 4, 12, 19],
+    [13, 11, 9, 7, 6, 7, 14, 20],
+    [20, 18, 16, 13, 11, 9, 8, 9, 16, 20],
+    [9, 7, 5, 3, 2, 2, 4, 12, 19],
+    [17, 15, 13, 10, 8, 7, 8, 16, 20],
+    [12, 10, 8, 6, 5, 6, 13, 19],
+    [19, 17, 15, 12, 10, 8, 7, 8, 16, 20],
+    [8, 6, 4, 2, 1, 2, 9, 15, 20],
+    [16, 14, 12, 9, 7, 6, 7, 15, 20],
+    [11, 9, 7, 5, 3, 2, 2, 4, 13, 20],
+    [18, 16, 13, 11, 9, 8, 9, 17, 20],
+    [7, 5, 3, 2, 1, 2, 4, 13, 20],
+    [13, 11, 9, 7, 6, 7, 15, 20],
+    [20, 18, 16, 13, 11, 9, 8, 9, 17, 20],
+    [9, 7, 5, 3, 2, 2, 4, 13, 20],
+    [17, 15, 13, 10, 8, 7, 8, 17, 20],
+    [12, 10, 8, 6, 5, 6, 14, 20],
+    [19, 17, 15, 12, 10, 8, 7, 8, 17, 20],
+    [8, 6, 4, 2, 1, 2, 10, 16, 20],
+    [16, 14, 12, 9, 7, 6, 7, 16, 20],
+    [11, 9, 7, 5, 3, 2, 2, 4, 14, 20],
+    [18, 16, 13, 11, 9, 8, 9, 18, 20],
+    [7, 5, 3, 2, 1, 2, 4, 14, 20],
+    [13, 11, 9, 7, 6, 7, 16, 20],
+    [20, 18, 16, 13, 11, 9, 8, 9, 18, 20],
+    [9, 7, 5, 3, 2, 2, 4, 14, 20],
+    [17, 15, 13, 10, 8, 7, 8, 18, 20],
+    [12, 10, 8, 6, 5, 6, 15, 20],
+    [19, 17, 15, 12, 10, 8, 7, 8, 18, 20],
+    [8, 6, 4, 2, 1, 2, 11, 17, 20],
+    [16, 14, 12, 9, 7, 6, 7, 17, 20],
+    [11, 9, 7, 5, 3, 2, 2, 4, 15, 20],
+    [18, 16, 13, 11, 9, 8, 9, 19, 20],
+    [7, 5, 3, 2, 1, 2, 4, 15, 20],
+    [13, 11, 9, 7, 6, 7, 17, 20],
 ];

@@ -35,7 +35,7 @@ CHART 2          CHART A          CHART B
 */
 
 
-function foo(previousChart, currentChart, database) {
+function createDatabase(previousChart, currentChart, database) {
     // Get any chart entries that start to descend in the current chart.
     const chevrons = new List(...new Set(previousChart.concat(...currentChart)))
     .filter(entry => database.get(entry).hasStartedDescending());
@@ -90,7 +90,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3);
 
-  foo(chart2, chart3, database);
+  createDatabase(chart2, chart3, database);
 
   expect(chart3.length).to.equal(20);
   expect(chart3.at(5)).to.equal("Eminem - My Name Is");
@@ -106,7 +106,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3);
 
-  foo(chart2, chart3, database);
+  createDatabase(chart2, chart3, database);
 
   expect(chart3.length).to.equal(20);
   expect(chart3.at(11)).to.equal("Azul Violeta - Quiere Más");
@@ -121,7 +121,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3, chart4);
 
-  foo(chart3, chart4, database);
+  createDatabase(chart3, chart4, database);
 
   expect(chart4.length).to.equal(20);
   expect(chart4.at(12)).to.equal("U2 - Beautiful Day");
@@ -136,7 +136,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3, chart4, chart5);
 
-  foo(chart4, chart5, database);
+  createDatabase(chart4, chart5, database);
 
   expect(chart5.length).to.equal(20);
   expect(chart5).to.include("Sophie Ellis Bextor - Murder On The Dance Floor");
@@ -161,7 +161,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3, chart4);
 
-  foo(chart3, chart4, database);
+  createDatabase(chart3, chart4, database);
 
   expect(chart4.length).to.equal(20);
   expect(chart3.difference(chart4).length).to.equal(2);
@@ -184,7 +184,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3, chart4);
 
-  foo(chart3, chart4, database);
+  createDatabase(chart3, chart4, database);
 
   expect(chart4.length).to.equal(20);
   expect(chart4.at(8)).to.equal("Eminem - Sing for the Moment");
@@ -199,7 +199,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3);
 
-  foo(chart2, chart3, database);
+  createDatabase(chart2, chart3, database);
 
   expect(chart3.length).to.equal(20);
   expect(chart3.at(9)).to.equal("Evanescence - Bring Me to Life");
@@ -215,7 +215,7 @@ function foo(previousChart, currentChart, database) {
 
   const database = createDatabase(chart1, chart2, chart3, chart4, chart5);
 
-  foo(chart4, chart5, database);
+  createDatabase(chart4, chart5, database);
 
   expect(chart5.length).to.equal(20);
   expect(chart5).to.include("A-Teens - Perfect Match");
@@ -237,7 +237,7 @@ function foo(previousChart, currentChart, database) {
   const database = createDatabase(chart1, chart2, chart3);
   const clone = chart3.slice();    
   
-  foo(chart2, chart3, database);
+  createDatabase(chart2, chart3, database);
     
   expect(chart3.length).to.equal(20);
   expect(chart3.join('')).to.equal(clone.join(''));

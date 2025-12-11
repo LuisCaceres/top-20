@@ -1,3 +1,5 @@
+// import { List } from "script";
+
 // First it is known as a list. A list consists of elements. 
 // This list is then formatted to attempt to eliminate continuity errors.
 // Then it is known as a chart. A chart consists of entries.
@@ -63,9 +65,9 @@ async function onYouTubeIframeAPIReady() {
   alert('The availability of video tracks has been verified');
 
   // Retrieves the 4 most recent charts, the current chart (this week) and the next chart (next week).   
-  const previousCharts = charts.slice(-4);
-  const currentChart = createChartFromList(lists.at(-2), usedItems);
-  const nextChart = createChartFromList(lists.at(-1), usedItems);
+  // const previousCharts = charts.slice(-4);
+  // const currentChart = createChartFromList(lists.at(-2), usedItems);
+  // const nextChart = createChartFromList(lists.at(-1), usedItems);
 
   // Creates a table-like structure consisting of entries and their positions.
   // This is referred to as the database. For example:
@@ -73,35 +75,44 @@ async function onYouTubeIframeAPIReady() {
   // ENTRY    | PREVIOUS CHART 4 | PREVIOUS CHART 3 | PREVIOUS CHART 2 | PREVIOUS CHART 1 | CURRENT CHART | NEXT CHART
   // TITLE 1    20                 11                 08                 05                 03              02
   // TITLE 2    18                 10                 06                 02                 02              03
-  const database = createDatabase(...previousCharts, currentChart, nextChart);
+  // const database = createDatabase(...previousCharts, currentChart, nextChart);
 
   // Ensures there are no unwanted chart movements as a result of introducing `currentChart`.
   // For example, an entry exiting the chart from position 10 is an unwanted movement.
-  currentChart.format(database);
+  // currentChart.format(database);
 
   // Replaces each entry on the current chart with an item. An item is simply an object that's associated with
   // a video track. An item also contains other useful information.
-  const items = currentChart.map((entry, index) => {
-    const item = usedItems.find(item => item.title === entry) || unusedItems.random();
-    unusedItems.remove(item);
-    usedItems.push(item);
-    item.position = `${index + 1}`.padStart(2, 0);
+  // const items = currentChart.map((entry, index) => {
+  //   const item = usedItems.find(item => item.title === entry) || unusedItems.random();
+  //   unusedItems.remove(item);
+  //   usedItems.push(item);
+  //   item.position = `${index + 1}`.padStart(2, 0);
 
-    return item;
-  });
+  //   return item;
+  // });
 
   // Retrieves a couple of items that serve as this week's extra items. An extra item is an item that's
   // likely to chart in the near future.
-  insertExtraItems(items, unusedItems);
+  // insertExtraItems(items, unusedItems);
 
   // Creates a playlist by replacing each item with a video track.
-  let playlist = createPlaylist(items, intro, sting, advertisement, newVideo);
+  // let playlist = createPlaylist(items, intro, sting, advertisement, newVideo);
   // Ensures the playlist has been built accordingly. For example, it verifies that the playlist contains exactly
   // 22 video tracks (20 currently charting video tracks plus 2 extra video tracks).
-  validate(playlist);
+  // validate(playlist);
   // Because of what I believe is a bug from the YouTube A.P.I. the playlist needs to be adjusted a little bit.
   // If this isn't done then some video tracks will finish playing prematurely.
-  playlist = adjustPlaylist(playlist);
+  // playlist = adjustPlaylist(playlist);
+  const playlist = [  {
+    title: "There She Goes",
+    artist: "Sixpence None The Richer",
+    priority: 1,
+    style: {width: "83vw"},
+    type: 0,
+    videoId: "68MKLkNSMN4",
+    volume: 100,
+  }];
 
   window.currentChart = currentChart;
 
